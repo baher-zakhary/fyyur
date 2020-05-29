@@ -10,4 +10,4 @@ DEBUG = True
 
 
 # TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = '<Put your local database url>'
+SQLALCHEMY_DATABASE_URI = 'postgres://ciphacpa:EBzLUPsS-_F01lnMWlTWbZ9j-GvwxOBW@ruby.db.elephantsql.com:5432/ciphacpa'
