@@ -11,3 +11,5 @@ DEBUG = True
 
 # TODO IMPLEMENT DATABASE URL
 SQLALCHEMY_DATABASE_URI = 'postgres://ciphacpa:EBzLUPsS-_F01lnMWlTWbZ9j-GvwxOBW@ruby.db.elephantsql.com:5432/ciphacpa'
+
+SQLALCHEMY_TRACK_MODIFICATIONS = False
