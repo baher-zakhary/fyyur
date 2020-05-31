@@ -13,14 +13,15 @@ from flask_wtf import Form
 from forms import *
 import config
 from flask_migrate import Migrate
-import models
+from models import create_app, Venue, Show, Artist, State, Genre
+import sys
 # from seed_data import seed_states_data, seed_genres_data
 
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
 
-app, db = models.create_app()
+app, db = create_app()
 moment = Moment(app)
 migrate = Migrate(app, db)
 
@@ -62,7 +63,7 @@ def index():
 def venues():
   # TODO: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-  
+
   data=[{
     "city": "San Francisco",
     "state": "CA",
@@ -195,14 +196,36 @@ def create_venue_form():
 
 @app.route('/venues/create', methods=['POST'])
 def create_venue_submission():
-  # TODO: insert form data as a new Venue record in the db, instead
-  # TODO: modify data to be the data object returned from db insertion
+  error = False
+  try:
+    # TODO: insert form data as a new Venue record in the db, instead
+    venue = Venue()
+    venue.name = request.form['name']
+    venue.city = request.form['city']
+    state = State.query.filter_by(name=request.form['state']).first()
+    venue.state = state
+    venue.address = request.form['address']
+    venue.phone = request.form['phone']
+    for name in request.form.getlist('genres'):
+      genre = Genre.query.filter_by(name=name).first()
+      venue.genres.append(genre) 
+    venue.facebook_link = request.form['facebook_link']
 
-  # on successful db insert, flash success
-  flash('Venue ' + request.form['name'] + ' was successfully listed!')
-  # TODO: on unsuccessful db insert, flash an error instead.
-  # e.g., flash('An error occurred. Venue ' + data.name + ' could not be listed.')
-  # see: http://flask.pocoo.org/docs/1.0/patterns/flashing/
+    db.session.add(venue)
+    db.session.commit()
+  except:
+    error = True
+    # TODO: on unsuccessful db insert, flash an error instead.
+    flash('An error occurred. Venue ' + venue.name + ' could not be listed.')
+    db.session.rollback()
+    print(sys.exc_info())
+  finally:
+    db.session.close()
+  # TODO: modify data to be the data object returned from db insertion
+  if not error:
+    # on successful db insert, flash success
+    flash('Venue ' + request.form['name'] + ' was successfully listed!')
+
   return render_template('pages/home.html')
 
 @app.route('/venues/<venue_id>', methods=['DELETE'])
