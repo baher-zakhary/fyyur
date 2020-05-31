@@ -17,7 +17,7 @@ class Genre(db.Model):
 
 
 venue_genre = db.Table('venue_genre',
-    db.Column('venue_id', db.Integer, db.ForeignKey('venue.id'), primary_key=True),
+    db.Column('venue_id', db.Integer, db.ForeignKey('venue.id', ondelete='CASCADE'), primary_key=True),
     db.Column('genre_id', db.Integer, db.ForeignKey('genre.id'), primary_key=True)
 )
 
@@ -44,11 +44,11 @@ class Venue(db.Model):
     phone = db.Column(db.String(120))
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
-    genres = db.relationship('Genre', secondary=venue_genre, backref=db.backref('venues', lazy=True))
+    genres = db.relationship('Genre', secondary=venue_genre, backref=db.backref('venues', lazy=True, cascade="all, delete"))
     website = db.Column(db.String())
     seeking_talent = db.Column(db.Boolean, default=False)
     seeking_description = db.Column(db.String())
-    shows = db.relationship('Show', backref="venue_shows", lazy=True)
+    shows = db.relationship('Show', backref="venue_shows", lazy=True, cascade="all, delete")
     past_shows_count = db.Column(db.Integer)
     upcoming_shows_count = db.Column(db.Integer)
 
@@ -61,13 +61,13 @@ class Artist(db.Model):
     city = db.Column(db.String(120), nullable=False)
     state_id = db.Column(db.Integer, db.ForeignKey('state.id'), nullable=False)
     phone = db.Column(db.String(120))
-    genres = db.relationship('Genre', secondary=artist_genre, backref=db.backref('artists', lazy=True))
+    genres = db.relationship('Genre', secondary=artist_genre, backref=db.backref('artists', lazy=True), cascade="all, delete")
     image_link = db.Column(db.String(500))
     facebook_link = db.Column(db.String(120))
     website = db.Column(db.String())
     seeking_venue = db.Column(db.Boolean, default=False)
     seeking_description = db.Column(db.String())
-    shows = db.relationship('Show', backref="artists_shows", lazy=True)
+    shows = db.relationship('Show', backref="artists_shows", lazy=True, cascade="all, delete")
     past_shows_count = db.Column(db.Integer)
     upcoming_shows_count = db.Column(db.Integer)
 
