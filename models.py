@@ -52,7 +52,7 @@ class Venue(db.Model):
     past_shows_count = db.Column(db.Integer)
     upcoming_shows_count = db.Column(db.Integer)
 
-    def __init__(self, past_shows, upcoming_shows):
+    def __init__(self, past_shows=[], upcoming_shows=[]):
       self.past_shows = past_shows
       self.upcoming_shows = upcoming_shows
 
@@ -75,7 +75,7 @@ class Artist(db.Model):
     past_shows_count = db.Column(db.Integer)
     upcoming_shows_count = db.Column(db.Integer)
 
-    def __init__(self, past_shows, upcoming_shows):
+    def __init__(self, past_shows=[], upcoming_shows=[]):
       self.past_shows = past_shows
       self.upcoming_shows = upcoming_shows
 
