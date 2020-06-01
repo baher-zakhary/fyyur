@@ -48,9 +48,13 @@ class Venue(db.Model):
     website = db.Column(db.String())
     seeking_talent = db.Column(db.Boolean, default=False)
     seeking_description = db.Column(db.String())
-    shows = db.relationship('Show', backref="venue_shows", lazy=True, cascade="all, delete")
+    shows = db.relationship('Show', backref="venue", lazy=True, cascade="all, delete")
     past_shows_count = db.Column(db.Integer)
     upcoming_shows_count = db.Column(db.Integer)
+
+    def __init__(self, past_shows, upcoming_shows):
+      self.past_shows = past_shows
+      self.upcoming_shows = upcoming_shows
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
@@ -67,9 +71,13 @@ class Artist(db.Model):
     website = db.Column(db.String())
     seeking_venue = db.Column(db.Boolean, default=False)
     seeking_description = db.Column(db.String())
-    shows = db.relationship('Show', backref="artists_shows", lazy=True, cascade="all, delete")
+    shows = db.relationship('Show', backref="artist", lazy=True, cascade="all, delete")
     past_shows_count = db.Column(db.Integer)
     upcoming_shows_count = db.Column(db.Integer)
+
+    def __init__(self, past_shows, upcoming_shows):
+      self.past_shows = past_shows
+      self.upcoming_shows = upcoming_shows
 
     # TODO: implement any missing fields, as a database migration using Flask-Migrate
 
