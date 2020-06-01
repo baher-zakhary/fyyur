@@ -267,35 +267,57 @@ def edit_artist_submission(artist_id):
   finally:
     db.session.close()
   if not error:
-    flash('Artist updated successfully')
+    flash('Artist updated successfully', 'error')
   else:
     flash('Artist not updated')
   return redirect(url_for('show_artist', artist_id=artist_id))
 
 @app.route('/venues/<int:venue_id>/edit', methods=['GET'])
 def edit_venue(venue_id):
-  form = VenueForm()
+  result = Venue.query.filter(Venue.id == venue_id).first()
   venue={
-    "id": 1,
-    "name": "The Musical Hop",
-    "genres": ["Jazz", "Reggae", "Swing", "Classical", "Folk"],
-    "address": "1015 Folsom Street",
-    "city": "San Francisco",
-    "state": "CA",
-    "phone": "123-123-1234",
-    "website": "https://www.themusicalhop.com",
-    "facebook_link": "https://www.facebook.com/TheMusicalHop",
-    "seeking_talent": True,
-    "seeking_description": "We are on the lookout for a local artist to play every two weeks. Please call us.",
-    "image_link": "https://images.unsplash.com/photo-1543900694-133f37abaaa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60"
+    "id": result.id,
+    "name": result.name,
+    "genres": list(map(lambda genre: genre.name, result.genres)),
+    "address": result.address,
+    "city": result.city,
+    "state": result.state.name,
+    "phone": result.phone,
+    "website": result.website,
+    "facebook_link": result.facebook_link,
+    "seeking_talent": result.seeking_talent,
+    "seeking_description": result.seeking_description,
+    "image_link": result.image_link
   }
   # TODO: populate form with values from venue with ID <venue_id>
+  form = VenueForm(data=venue)
   return render_template('forms/edit_venue.html', form=form, venue=venue)
 
 @app.route('/venues/<int:venue_id>/edit', methods=['POST'])
 def edit_venue_submission(venue_id):
   # TODO: take values from the form submitted, and update existing
   # venue record with ID <venue_id> using the new attributes
+  error = False
+  try:
+    venue = Venue.query.filter(Venue.id == venue_id).first()
+    venue.name = request.form['name']
+    venue.city = request.form['city']
+    venue.state = State.query.filter(State.name == request.form['state']).first()
+    venue.address = request.form['address']
+    venue.phone = request.form['phone']
+    venue.facebook_link = request.form['facebook_link']
+    venue.genres = Genre.query.filter(Genre.name.in_(request.form.getlist('genres'))).all()
+    db.session.commit()
+  except:
+    error = True
+    print(sys.exc_info())
+    db.session.rollback()
+  finally:
+    db.session.close()
+  if not error:
+    flash('Venue updated successfully')
+  else:
+    flash('Venue not updated')
   return redirect(url_for('show_venue', venue_id=venue_id))
 
 #  Create Artist
