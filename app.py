@@ -32,7 +32,7 @@ migrate = Migrate(app, db)
 # Models.
 #----------------------------------------------------------------------------#
 
-# moved in models.py file
+# moved to models.py file
 
 #----------------------------------------------------------------------------#
 # Filters.
@@ -134,7 +134,7 @@ def create_venue_submission():
     venue.address = request.form['address']
     venue.phone = request.form['phone']
     venue.facebook_link = request.form['facebook_link']
-    venue.genres = Genre.query.filter(Genre.name.in_(request.form.getlist('genres'))).all() 
+    venue.genres = Genre.query.filter(Genre.name.in_(request.form.getlist('genres'))).all()
     db.session.add(venue)
     db.session.commit()
   except:
@@ -250,9 +250,9 @@ def edit_artist_submission(artist_id):
   try:
     artist = Artist.query.filter(Artist.id == artist_id).first()
     artist.name = request.form['name']
-    artist.city = request.form['city'] 
-    artist.state = State.query.filter(State.name == request.form['state']).first()    
-    artist.phone = request.form['phone'] 
+    artist.city = request.form['city']
+    artist.state = State.query.filter(State.name == request.form['state']).first()
+    artist.phone = request.form['phone']
     artist.image_link = request.form['image_link']
     artist.facebook_link = request.form['facebook_link']
     artist.genres = Genre.query.filter(Genre.name.in_(request.form.getlist('genres'))).all()
@@ -338,7 +338,7 @@ def create_artist_submission():
     artist.phone = request.form['phone']
     for name in request.form.getlist('genres'):
       genre = Genre.query.filter_by(name=name).first()
-      artist.genres.append(genre) 
+      artist.genres.append(genre)
     artist.facebook_link = request.form['facebook_link']
 
     db.session.add(artist)
