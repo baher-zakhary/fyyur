@@ -1,0 +1,1064 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.8 (Ubuntu 11.8-1.pgdg20.04+1)
+-- Dumped by pg_dump version 12.3
+
+-- Started on 2020-08-12 13:19:28
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 9 (class 3079 OID 17135)
+-- Name: btree_gin; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;
+
+
+--
+-- TOC entry 4119 (class 0 OID 0)
+-- Dependencies: 9
+-- Name: EXTENSION btree_gin; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gin IS 'support for indexing common datatypes in GIN';
+
+
+--
+-- TOC entry 5 (class 3079 OID 17680)
+-- Name: btree_gist; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
+
+
+--
+-- TOC entry 4120 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gist IS 'support for indexing common datatypes in GiST';
+
+
+--
+-- TOC entry 16 (class 3079 OID 16661)
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- TOC entry 4121 (class 0 OID 0)
+-- Dependencies: 16
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
+-- TOC entry 7 (class 3079 OID 17577)
+-- Name: cube; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
+
+
+--
+-- TOC entry 4122 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: EXTENSION cube; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION cube IS 'data type for multidimensional cubes';
+
+
+--
+-- TOC entry 22 (class 3079 OID 16384)
+-- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
+
+
+--
+-- TOC entry 4123 (class 0 OID 0)
+-- Dependencies: 22
+-- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
+
+
+--
+-- TOC entry 10 (class 3079 OID 17130)
+-- Name: dict_int; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dict_int WITH SCHEMA public;
+
+
+--
+-- TOC entry 4124 (class 0 OID 0)
+-- Dependencies: 10
+-- Name: EXTENSION dict_int; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dict_int IS 'text search dictionary template for integers';
+
+
+--
+-- TOC entry 4 (class 3079 OID 18303)
+-- Name: dict_xsyn; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dict_xsyn WITH SCHEMA public;
+
+
+--
+-- TOC entry 4125 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: EXTENSION dict_xsyn; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dict_xsyn IS 'text search dictionary template for extended synonym processing';
+
+
+--
+-- TOC entry 6 (class 3079 OID 17664)
+-- Name: earthdistance; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
+
+
+--
+-- TOC entry 4126 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: EXTENSION earthdistance; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION earthdistance IS 'calculate great-circle distances on the surface of the Earth';
+
+
+--
+-- TOC entry 17 (class 3079 OID 16650)
+-- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
+
+
+--
+-- TOC entry 4127 (class 0 OID 0)
+-- Dependencies: 17
+-- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
+
+
+--
+-- TOC entry 11 (class 3079 OID 17007)
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- TOC entry 4128 (class 0 OID 0)
+-- Dependencies: 11
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
+--
+-- TOC entry 12 (class 3079 OID 16889)
+-- Name: intarray; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS intarray WITH SCHEMA public;
+
+
+--
+-- TOC entry 4129 (class 0 OID 0)
+-- Dependencies: 12
+-- Name: EXTENSION intarray; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION intarray IS 'functions, operators, and index support for 1-D arrays of integers';
+
+
+--
+-- TOC entry 20 (class 3079 OID 16444)
+-- Name: ltree; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA public;
+
+
+--
+-- TOC entry 4130 (class 0 OID 0)
+-- Dependencies: 20
+-- Name: EXTENSION ltree; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION ltree IS 'data type for hierarchical tree-like structures';
+
+
+--
+-- TOC entry 2 (class 3079 OID 18315)
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- TOC entry 4131 (class 0 OID 0)
+-- Dependencies: 2
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+
+--
+-- TOC entry 13 (class 3079 OID 16812)
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- TOC entry 4132 (class 0 OID 0)
+-- Dependencies: 13
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
+-- TOC entry 14 (class 3079 OID 16775)
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- TOC entry 4133 (class 0 OID 0)
+-- Dependencies: 14
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
+-- TOC entry 8 (class 3079 OID 17572)
+-- Name: pgrowlocks; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgrowlocks WITH SCHEMA public;
+
+
+--
+-- TOC entry 4134 (class 0 OID 0)
+-- Dependencies: 8
+-- Name: EXTENSION pgrowlocks; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgrowlocks IS 'show row-level locking information';
+
+
+--
+-- TOC entry 19 (class 3079 OID 16619)
+-- Name: pgstattuple; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgstattuple WITH SCHEMA public;
+
+
+--
+-- TOC entry 4135 (class 0 OID 0)
+-- Dependencies: 19
+-- Name: EXTENSION pgstattuple; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgstattuple IS 'show tuple-level statistics';
+
+
+--
+-- TOC entry 18 (class 3079 OID 16629)
+-- Name: tablefunc; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
+
+
+--
+-- TOC entry 4136 (class 0 OID 0)
+-- Dependencies: 18
+-- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, including crosstab';
+
+
+--
+-- TOC entry 3 (class 3079 OID 18308)
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- TOC entry 4137 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
+--
+-- TOC entry 15 (class 3079 OID 16764)
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- TOC entry 4138 (class 0 OID 0)
+-- Dependencies: 15
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+--
+-- TOC entry 21 (class 3079 OID 16430)
+-- Name: xml2; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS xml2 WITH SCHEMA public;
+
+
+--
+-- TOC entry 4139 (class 0 OID 0)
+-- Dependencies: 21
+-- Name: EXTENSION xml2; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION xml2 IS 'XPath querying and XSLT';
+
+
+SET default_tablespace = '';
+
+--
+-- TOC entry 222 (class 1259 OID 96117)
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO ciphacpa;
+
+--
+-- TOC entry 228 (class 1259 OID 96242)
+-- Name: artist; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.artist (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    city character varying(120) NOT NULL,
+    state_id integer NOT NULL,
+    phone character varying(120),
+    image_link character varying(500),
+    facebook_link character varying(120),
+    website character varying,
+    seeking_venue boolean,
+    seeking_description character varying,
+    past_shows_count integer,
+    upcoming_shows_count integer
+);
+
+
+ALTER TABLE public.artist OWNER TO ciphacpa;
+
+--
+-- TOC entry 231 (class 1259 OID 96272)
+-- Name: artist_genre; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.artist_genre (
+    artist_id integer NOT NULL,
+    genre_id integer NOT NULL
+);
+
+
+ALTER TABLE public.artist_genre OWNER TO ciphacpa;
+
+--
+-- TOC entry 227 (class 1259 OID 96240)
+-- Name: artist_id_seq; Type: SEQUENCE; Schema: public; Owner: ciphacpa
+--
+
+CREATE SEQUENCE public.artist_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.artist_id_seq OWNER TO ciphacpa;
+
+--
+-- TOC entry 4140 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: artist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ciphacpa
+--
+
+ALTER SEQUENCE public.artist_id_seq OWNED BY public.artist.id;
+
+
+--
+-- TOC entry 224 (class 1259 OID 96223)
+-- Name: genre; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.genre (
+    id integer NOT NULL,
+    name character varying
+);
+
+
+ALTER TABLE public.genre OWNER TO ciphacpa;
+
+--
+-- TOC entry 223 (class 1259 OID 96221)
+-- Name: genre_id_seq; Type: SEQUENCE; Schema: public; Owner: ciphacpa
+--
+
+CREATE SEQUENCE public.genre_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.genre_id_seq OWNER TO ciphacpa;
+
+--
+-- TOC entry 4141 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: genre_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ciphacpa
+--
+
+ALTER SEQUENCE public.genre_id_seq OWNED BY public.genre.id;
+
+
+--
+-- TOC entry 233 (class 1259 OID 96289)
+-- Name: show; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.show (
+    id integer NOT NULL,
+    venue_id integer,
+    artist_id integer,
+    start_time timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.show OWNER TO ciphacpa;
+
+--
+-- TOC entry 232 (class 1259 OID 96287)
+-- Name: show_id_seq; Type: SEQUENCE; Schema: public; Owner: ciphacpa
+--
+
+CREATE SEQUENCE public.show_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.show_id_seq OWNER TO ciphacpa;
+
+--
+-- TOC entry 4142 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: show_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ciphacpa
+--
+
+ALTER SEQUENCE public.show_id_seq OWNED BY public.show.id;
+
+
+--
+-- TOC entry 226 (class 1259 OID 96234)
+-- Name: state; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.state (
+    id integer NOT NULL,
+    name character varying(2)
+);
+
+
+ALTER TABLE public.state OWNER TO ciphacpa;
+
+--
+-- TOC entry 225 (class 1259 OID 96232)
+-- Name: state_id_seq; Type: SEQUENCE; Schema: public; Owner: ciphacpa
+--
+
+CREATE SEQUENCE public.state_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.state_id_seq OWNER TO ciphacpa;
+
+--
+-- TOC entry 4143 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: state_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ciphacpa
+--
+
+ALTER SEQUENCE public.state_id_seq OWNED BY public.state.id;
+
+
+--
+-- TOC entry 230 (class 1259 OID 96258)
+-- Name: venue; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.venue (
+    id integer NOT NULL,
+    name character varying NOT NULL,
+    city character varying(120) NOT NULL,
+    state_id integer NOT NULL,
+    address character varying(120) NOT NULL,
+    phone character varying(120),
+    image_link character varying(500),
+    facebook_link character varying(120),
+    website character varying,
+    seeking_talent boolean,
+    seeking_description character varying,
+    past_shows_count integer,
+    upcoming_shows_count integer
+);
+
+
+ALTER TABLE public.venue OWNER TO ciphacpa;
+
+--
+-- TOC entry 234 (class 1259 OID 96305)
+-- Name: venue_genre; Type: TABLE; Schema: public; Owner: ciphacpa
+--
+
+CREATE TABLE public.venue_genre (
+    venue_id integer NOT NULL,
+    genre_id integer NOT NULL
+);
+
+
+ALTER TABLE public.venue_genre OWNER TO ciphacpa;
+
+--
+-- TOC entry 229 (class 1259 OID 96256)
+-- Name: venue_id_seq; Type: SEQUENCE; Schema: public; Owner: ciphacpa
+--
+
+CREATE SEQUENCE public.venue_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.venue_id_seq OWNER TO ciphacpa;
+
+--
+-- TOC entry 4144 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: venue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ciphacpa
+--
+
+ALTER SEQUENCE public.venue_id_seq OWNED BY public.venue.id;
+
+
+--
+-- TOC entry 3948 (class 2604 OID 96245)
+-- Name: artist id; Type: DEFAULT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.artist ALTER COLUMN id SET DEFAULT nextval('public.artist_id_seq'::regclass);
+
+
+--
+-- TOC entry 3946 (class 2604 OID 96226)
+-- Name: genre id; Type: DEFAULT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.genre ALTER COLUMN id SET DEFAULT nextval('public.genre_id_seq'::regclass);
+
+
+--
+-- TOC entry 3950 (class 2604 OID 96292)
+-- Name: show id; Type: DEFAULT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.show ALTER COLUMN id SET DEFAULT nextval('public.show_id_seq'::regclass);
+
+
+--
+-- TOC entry 3947 (class 2604 OID 96237)
+-- Name: state id; Type: DEFAULT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.state ALTER COLUMN id SET DEFAULT nextval('public.state_id_seq'::regclass);
+
+
+--
+-- TOC entry 3949 (class 2604 OID 96261)
+-- Name: venue id; Type: DEFAULT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.venue ALTER COLUMN id SET DEFAULT nextval('public.venue_id_seq'::regclass);
+
+
+--
+-- TOC entry 4101 (class 0 OID 96117)
+-- Dependencies: 222
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.alembic_version (version_num) FROM stdin;
+1784db63bd7f
+\.
+
+
+--
+-- TOC entry 4107 (class 0 OID 96242)
+-- Dependencies: 228
+-- Data for Name: artist; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.artist (id, name, city, state_id, phone, image_link, facebook_link, website, seeking_venue, seeking_description, past_shows_count, upcoming_shows_count) FROM stdin;
+3	GUNS N PETALS	San Francisco	158	326-123-5000	https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80	https://www.facebook.com/GunsNPetals	https://www.gunsnpetalsband.com	f	\N	\N	\N
+4	MATT QUEVEDO	New York	180	300-400-5000	https://images.unsplash.com/photo-1495223153807-b916f75de8c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80	 https://www.facebook.com/mattquevedo923251523	\N	f	\N	\N	\N
+5	THE WILD SAX BAND	San Francisco	158	432-325-5432	https://images.unsplash.com/photo-1558369981-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=794&q=80		\N	f	\N	\N	\N
+6	nnnn	cccc	154	12345	\N	facebook.com/ddd	\N	f	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 4110 (class 0 OID 96272)
+-- Dependencies: 231
+-- Data for Name: artist_genre; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.artist_genre (artist_id, genre_id) FROM stdin;
+3	19
+4	13
+5	5
+5	13
+6	3
+6	4
+6	5
+\.
+
+
+--
+-- TOC entry 4103 (class 0 OID 96223)
+-- Dependencies: 224
+-- Data for Name: genre; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.genre (id, name) FROM stdin;
+3	Alternative
+4	Blues
+5	Classical
+6	Country
+7	Electronic
+8	Folk
+9	Funk
+10	Hip-Hop
+11	Heavy Metal
+12	Instrumental
+13	Jazz
+14	Musical Theatre
+15	Pop
+16	Punk
+17	R&B
+18	Reggae
+19	Rock n Roll
+20	Soul
+21	Other
+\.
+
+
+--
+-- TOC entry 4112 (class 0 OID 96289)
+-- Dependencies: 233
+-- Data for Name: show; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.show (id, venue_id, artist_id, start_time) FROM stdin;
+2	12	3	2019-05-21 21:30:00
+3	13	4	2019-06-15 23:00:00
+4	13	5	2035-04-01 20:00:00
+5	13	5	2035-04-15 20:00:00
+\.
+
+
+--
+-- TOC entry 4105 (class 0 OID 96234)
+-- Dependencies: 226
+-- Data for Name: state; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.state (id, name) FROM stdin;
+154	AL
+155	AK
+156	AZ
+157	AR
+158	CA
+159	CO
+160	CT
+161	DE
+162	DC
+163	FL
+164	GA
+165	HI
+166	ID
+167	IL
+168	IN
+169	IA
+170	KS
+171	KY
+172	LA
+173	ME
+174	MT
+175	NE
+176	NV
+177	NH
+178	NJ
+179	NM
+180	NY
+181	NC
+182	ND
+183	OH
+184	OK
+185	OR
+186	MD
+187	MA
+188	MI
+189	MN
+190	MS
+191	MO
+192	PA
+193	RI
+194	SC
+195	SD
+196	TN
+197	TX
+198	UT
+199	VT
+200	VA
+201	WA
+202	WV
+203	WI
+204	WY
+\.
+
+
+--
+-- TOC entry 4109 (class 0 OID 96258)
+-- Dependencies: 230
+-- Data for Name: venue; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.venue (id, name, city, state_id, address, phone, image_link, facebook_link, website, seeking_talent, seeking_description, past_shows_count, upcoming_shows_count) FROM stdin;
+12	THE MUSICAL HOP	San Francisco	158	1015 Folsom Street	123-123-1234	https://images.unsplash.com/photo-1543900694-133f37abaaa5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60	https://www.facebook.com/TheMusicalHop	https://www.themusicalhop.com	t	We are on the lookout for a local artist to play every two weeks. Please call us.	\N	\N
+13	PARK SQUARE LIVE MUSIC & COFFEE	San Francisco	158	34 Whiskey Moore Ave	415-000-1234	https://images.unsplash.com/photo-1485686531765-ba63b07845a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80	https://www.facebook.com/ParkSquareLiveMusicAndCoffee	https://www.parksquarelivemusicandcoffee.com	f	\N	\N	\N
+14	THE DUELING PIANOS BAR	New York	180	335 Delancey Street	914-003-1132	https://images.unsplash.com/photo-1497032205916-ac775f0649ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80	https://www.facebook.com/theduelingpianos	https://www.theduelingpianos.com	f	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 4113 (class 0 OID 96305)
+-- Dependencies: 234
+-- Data for Name: venue_genre; Type: TABLE DATA; Schema: public; Owner: ciphacpa
+--
+
+COPY public.venue_genre (venue_id, genre_id) FROM stdin;
+12	5
+12	8
+12	13
+12	18
+12	21
+13	5
+13	8
+13	13
+13	19
+14	5
+14	10
+14	17
+\.
+
+
+--
+-- TOC entry 4145 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: artist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ciphacpa
+--
+
+SELECT pg_catalog.setval('public.artist_id_seq', 6, true);
+
+
+--
+-- TOC entry 4146 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: genre_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ciphacpa
+--
+
+SELECT pg_catalog.setval('public.genre_id_seq', 31, true);
+
+
+--
+-- TOC entry 4147 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: show_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ciphacpa
+--
+
+SELECT pg_catalog.setval('public.show_id_seq', 6, true);
+
+
+--
+-- TOC entry 4148 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: state_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ciphacpa
+--
+
+SELECT pg_catalog.setval('public.state_id_seq', 217, true);
+
+
+--
+-- TOC entry 4149 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: venue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ciphacpa
+--
+
+SELECT pg_catalog.setval('public.venue_id_seq', 24, true);
+
+
+--
+-- TOC entry 3952 (class 2606 OID 96121)
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+
+
+--
+-- TOC entry 3966 (class 2606 OID 96276)
+-- Name: artist_genre artist_genre_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.artist_genre
+    ADD CONSTRAINT artist_genre_pkey PRIMARY KEY (artist_id, genre_id);
+
+
+--
+-- TOC entry 3962 (class 2606 OID 96250)
+-- Name: artist artist_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.artist
+    ADD CONSTRAINT artist_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3954 (class 2606 OID 96380)
+-- Name: genre genre_name_key; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.genre
+    ADD CONSTRAINT genre_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 3956 (class 2606 OID 96231)
+-- Name: genre genre_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.genre
+    ADD CONSTRAINT genre_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3968 (class 2606 OID 96294)
+-- Name: show show_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.show
+    ADD CONSTRAINT show_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3958 (class 2606 OID 96382)
+-- Name: state state_name_key; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.state
+    ADD CONSTRAINT state_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 3960 (class 2606 OID 96239)
+-- Name: state state_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.state
+    ADD CONSTRAINT state_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3970 (class 2606 OID 96309)
+-- Name: venue_genre venue_genre_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.venue_genre
+    ADD CONSTRAINT venue_genre_pkey PRIMARY KEY (venue_id, genre_id);
+
+
+--
+-- TOC entry 3964 (class 2606 OID 96266)
+-- Name: venue venue_pkey; Type: CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.venue
+    ADD CONSTRAINT venue_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3973 (class 2606 OID 96277)
+-- Name: artist_genre artist_genre_artist_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.artist_genre
+    ADD CONSTRAINT artist_genre_artist_id_fkey FOREIGN KEY (artist_id) REFERENCES public.artist(id);
+
+
+--
+-- TOC entry 3974 (class 2606 OID 96282)
+-- Name: artist_genre artist_genre_genre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.artist_genre
+    ADD CONSTRAINT artist_genre_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genre(id);
+
+
+--
+-- TOC entry 3971 (class 2606 OID 96251)
+-- Name: artist artist_state_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.artist
+    ADD CONSTRAINT artist_state_id_fkey FOREIGN KEY (state_id) REFERENCES public.state(id);
+
+
+--
+-- TOC entry 3975 (class 2606 OID 96295)
+-- Name: show show_artist_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.show
+    ADD CONSTRAINT show_artist_id_fkey FOREIGN KEY (artist_id) REFERENCES public.artist(id);
+
+
+--
+-- TOC entry 3976 (class 2606 OID 96300)
+-- Name: show show_venue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.show
+    ADD CONSTRAINT show_venue_id_fkey FOREIGN KEY (venue_id) REFERENCES public.venue(id);
+
+
+--
+-- TOC entry 3977 (class 2606 OID 96310)
+-- Name: venue_genre venue_genre_genre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.venue_genre
+    ADD CONSTRAINT venue_genre_genre_id_fkey FOREIGN KEY (genre_id) REFERENCES public.genre(id);
+
+
+--
+-- TOC entry 3978 (class 2606 OID 103277)
+-- Name: venue_genre venue_genre_venue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.venue_genre
+    ADD CONSTRAINT venue_genre_venue_id_fkey FOREIGN KEY (venue_id) REFERENCES public.venue(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3972 (class 2606 OID 96267)
+-- Name: venue venue_state_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ciphacpa
+--
+
+ALTER TABLE ONLY public.venue
+    ADD CONSTRAINT venue_state_id_fkey FOREIGN KEY (state_id) REFERENCES public.state(id);
+
+
+-- Completed on 2020-08-12 13:28:02
+
+--
+-- PostgreSQL database dump complete
+--
+
